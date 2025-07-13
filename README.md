@@ -106,22 +106,22 @@ The random-sequential update method is a discrete-time method where each spin is
 
 1. Initialize the $N \times N$ lattice with random spins $s_{(i, j)} = \pm 1$.
 2. Set the flipping rate $w_{(i, j)}$ for each spin $s_{(i, j)}$:
-    - Calculate the change in energy $\Delta E$ if $s_{(i, j)}$ is flipped:
+- Calculate the change in energy $\Delta E$ if $s_{(i, j)}$ is flipped:
 
-    $$
-        \Delta E_{(i, j)} = 2 J s_{(i, j)} (s_{(i-1, j)} + s_{(i+1, j)} + s_{(i, j-1)} + s_{(i, j+1)})
-    $$
+$$
+    \Delta E_{(i, j)} = 2 J s_{(i, j)} (s_{(i-1, j)} + s_{(i+1, j)} + s_{(i, j-1)} + s_{(i, j+1)})
+$$
 
-    - Set the flipping rate $w_{(i, j)}$ as follows:
+- Set the flipping rate $w_{(i, j)}$ as follows:
 
-    $$
-        w_{(i, j)} = \begin{cases}
-            e^{-\beta \Delta E} & \text{if } \Delta E > 0, \\
-            1 & \text{if } \Delta E \leq 0.
-        \end{cases}
-    $$
+$$
+    w_{(i, j)} = \begin{cases}
+        e^{-\beta \Delta E} & \text{if } \Delta E > 0, \\
+        1 & \text{if } \Delta E \leq 0.
+    \end{cases}
+$$
 
-    - Update the maximum flipping rate $w = \max_{i, j} w_{(i, j)}$.
+- Update the maximum flipping rate $w = \max_{i, j} w_{(i, j)}$.
 3. Select a random spin $(i, j)$, and calculate the flipping probability $p = w_{(i, j)} / w$ within the time step $\Delta t = 1 / w$. Generate a random number $r$ from a uniform distribution $[0, 1]$. If $r < p$, flip the spin $s_{(i, j)}$. Otherwise, do nothing.
 4. Update the time $t = t + \Delta t / N^2$, where $N^2$ is the total number of spins.
 5. Repeat steps 2-4 until the system reaches equilibrium.
@@ -132,19 +132,23 @@ The next-reaction method is a continuous-time method where the time to the next 
 
 1. Initialize the lattice with random spins $s_{(i, j)} = \pm 1$. Set the initial time $t = 0$.
 2. Set the flipping rate $w_{(i, j)}$ and the reaction time $\tau_{(i, j)}$ for each spin $s_{(i, j)}$:
-    - Calculate the change in energy $\Delta E$ if $s_{(i, j)}$ is flipped:
-        $$
-            \Delta E_{(i, j)} = 2 J s_{(i, j)} (s_{(i-1, j)} + s_{(i+1, j)} + s_{(i, j-1)} + s_{(i, j+1)})
-        $$
-    - Set the flipping rate $w_{(i, j)}$ as follows:
-        $$
-            w_{(i, j)} = \begin{cases}
-                e^{-\beta \Delta E} & \text{if } \Delta E > 0, \\
-                1 & \text{if } \Delta E \leq 0.
-            \end{cases}
-        $$
-    - Generate a random number $r$ from a uniform distribution $[0, 1]$. Set the reaction time $\tau_{(i, j)} = -\ln r / w_{(i, j)}$.
-    - Store the reaction time $\tau_{(i, j)}$ in an indexed min-heap.
+- Calculate the change in energy $\Delta E$ if $s_{(i, j)}$ is flipped:
+
+$$
+    \Delta E_{(i, j)} = 2 J s_{(i, j)} (s_{(i-1, j)} + s_{(i+1, j)} + s_{(i, j-1)} + s_{(i, j+1)})
+$$
+
+- Set the flipping rate $w_{(i, j)}$ as follows:
+
+$$
+    w_{(i, j)} = \begin{cases}
+        e^{-\beta \Delta E} & \text{if } \Delta E > 0, \\
+        1 & \text{if } \Delta E \leq 0.
+    \end{cases}
+$$
+
+- Generate a random number $r$ from a uniform distribution $[0, 1]$. Set the reaction time $\tau_{(i, j)} = -\ln r / w_{(i, j)}$.
+- Store the reaction time $\tau_{(i, j)}$ in an indexed min-heap.
 3. Select the spin $(i, j)$ with the minimum reaction time $\tau_{(i, j)}$ from the min-heap. Flip the spin $s_{(i, j)}$.
 4. Update the time $t = \tau_{(i, j)}$.
 5. Update the reaction time for the neighboring spins and the spin $(i, j)$ itself as follows: $\tau_{(i, j)} = t + \Delta \tau_{(i, j)}$, where $\Delta \tau_{(i, j)} = -\ln r / w_{(i, j)}$, $r \sim \text{Unif}[0, 1]$. Update the min-heap.
