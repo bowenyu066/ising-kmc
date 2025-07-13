@@ -2,6 +2,10 @@
 
 Non-equilibrium systems, such as those undergoing relaxation dynamics, are crucial for understanding real-world phenomena. The 2D Ising model is a fundamental framework for studying phase transitions and spin dynamics in statistical mechanics. This repo contains codes that simulate and analyze the magnetization dynamics of the 2D Ising model under various temperatures $T$, focusing on the behavior of relaxation towards equilibrium and the phase transition during altering the temperature $T$.  Both discrete- and continuous-time approaches -- the random-sequential update method and the next-reaction method -- are implemented to study the dynamics of the system.
 
+![Ising Model at $\beta=0.3$](examples/next_reaction/beta=0.3.gif)
+
+![Ising Model at $\beta=0.7$](examples/next_reaction/beta=0.7.gif)
+
 ## Prerequisites
 
 You need to have Python 3.9 installed along with the following libraries to run the simulations:
